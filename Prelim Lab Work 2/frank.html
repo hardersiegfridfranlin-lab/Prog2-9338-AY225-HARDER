@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIEGFRID | IT Game Development</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-dark: #0b0f19;
+            --panel: #12182b;
+            --neon: #00fff7;
+            --yellow: #ffcc00;
+            --red: #ff4d6d;
+            --text: #e6e6e6;
+            --muted: #9aa0b4;
+        }
+
+        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+
+        body {
+            margin: 0;
+            background: radial-gradient(circle at top, #141a33, #05070f);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        header {
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-dark);
+            border-bottom: 1px solid rgba(255, 204, 0, 0.3);
+        }
+
+        .logo-area { display: flex; align-items: center; gap: 12px; }
+        .logo-area img { height: 40px; }
+        .logo-area h1 { color: var(--yellow); font-size: 20px; margin: 0; letter-spacing: 2px; }
+
+        header nav a { color: var(--muted); text-decoration: none; margin-left: 20px; font-size: 14px; }
+        header nav a:hover { color: var(--yellow); }
+
+        .container { max-width: 1000px; margin: auto; padding: 40px 20px; }
+
+        .banner {
+            position: relative; height: 220px; border-radius: 14px; padding: 40px; margin-bottom: 40px;
+            background: linear-gradient(135deg, #1a1f3c, #05070f);
+            box-shadow: 0 0 30px rgba(255, 204, 0, 0.15);
+            display: flex; flex-direction: column; justify-content: center; overflow: hidden;
+        }
+
+        .banner h2 { color: var(--yellow); margin: 0; font-size: 28px; }
+        .banner p { color: var(--muted); margin-top: 10px; }
+        .banner-icon { position: absolute; right: 30px; width: 200px; opacity: 0.3; }
+
+        .login-section { display: flex; justify-content: center; }
+
+        .login-card {
+            background: linear-gradient(180deg, #12182b, #0b0f19);
+            padding: 35px; border-radius: 14px; width: 100%; max-width: 400px;
+            border: 1px solid rgba(255, 204, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .login-card h3 { text-align: center; color: var(--yellow); margin-bottom: 25px; letter-spacing: 2px; }
+
+        .input-group { position: relative; margin-bottom: 20px; }
+        .input-group i.main-icon { position: absolute; left: 12px; top: 12px; color: var(--muted); }
+
+        .toggle-password { position: absolute; right: 12px; top: 12px; color: var(--muted); cursor: pointer; }
+
+        input {
+            width: 100%; padding: 12px 40px; border-radius: 6px; border: 1px solid #1f2544;
+            background: #05070f; color: var(--text); outline: none; transition: 0.3s;
+        }
+
+        input:focus { border-color: var(--yellow); }
+
+        .error { color: var(--red); font-size: 11px; margin-top: 5px; height: 14px; }
+
+        button {
+            width: 100%; padding: 12px; border-radius: 6px; border: none; font-weight: bold;
+            background: linear-gradient(90deg, var(--yellow), #ffea70); cursor: pointer; transition: 0.3s;
+        }
+
+        button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255, 204, 0, 0.2); }
+
+        #timestampArea { display: none; text-align: center; padding: 10px; }
+        .success-icon { font-size: 40px; color: var(--neon); margin-bottom: 10px; }
+        .secondary-btn { background: var(--neon); margin-top: 15px; color: #000; }
+
+        footer { text-align: center; padding: 40px; color: var(--muted); font-size: 12px; }
+    </style>
+</head>
+<body>
+
+    <audio id="beepAudio" preload="auto">
+        <source src="malupiton-aray-ko_oZxxJeY.mp3" type="audio/mpeg">
+    </audio>
+
+    <header>
+        <div class="logo-area">
+            <img src="Siegfrid.png" alt="Logo">
+            <h1>SIEGFRID</h1>
+        </div>
+        <nav><a href="#">Home</a><a href="#">Topics</a><a href="#">Contact</a></nav>
+    </header> 
+
+    <div class="container">
+        <div class="banner">
+            <h2>IT Game Development Portal</h2>
+            <p>Design. Code. Play. Powering the future of game development.</p>
+            <img src="banner-bg.png" alt="Icon" class="banner-icon">
+        </div>
+
+        <div class="login-section">
+            <div class="login-card" id="loginCard">
+                <h3>Player Login</h3>
+                <form id="attendanceForm">
+                    <div class="input-group">
+                        <i class="fa-solid fa-envelope main-icon"></i>
+                        <input type="email" id="email" placeholder="Email" required autofocus>
+                        <div class="error" id="emailError"></div>
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-lock main-icon"></i>
+                        <input type="password" id="password" placeholder="Password" required>
+                        <i class="fa-solid fa-eye toggle-password" id="togglePass"></i>
+                        <div class="error" id="passwordError"></div>
+                    </div>
+                    <button type="submit">Login</button>
+                </form>
+
+                <div id="timestampArea">
+                    <i class="fa-solid fa-circle-check success-icon"></i>
+                    <h4 style="color: var(--neon);">Attendance Logged</h4>
+                    <p id="displayTime"></p>
+                    <button id="downloadBtn" class="secondary-btn">Download Summary</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>© 2026 SIEGFRID • IT Game Development</footer>
+
+    <script src="frank.js"></script>
+</body>
+</html>
