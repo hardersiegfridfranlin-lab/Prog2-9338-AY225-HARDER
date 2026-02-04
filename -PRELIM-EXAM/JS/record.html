@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siegfrid Records</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-green: #188405;
+            --dark-black: #000000;
+            --soft-white: #ffffff;
+            --border-gray: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            height: 95vh;
+        }
+
+        .dashboard {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            max-width: 1600px;
+        }
+
+        .input-section {
+            background: var(--soft-white);
+            width: 320px;
+            padding: 30px;
+            border-radius: 0; 
+            border: 3px solid var(--dark-black);
+            box-shadow: 10px 10px 0px var(--neon-green);
+            display: flex;
+            flex-direction: column;
+        }
+
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            background: var(--dark-black);
+            color: var(--neon-green);
+            padding: 10px;
+            text-align: center;
+            margin-top: 0;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid var(--dark-black);
+            font-weight: bold;
+            font-family: 'Rajdhani', sans-serif;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            outline: none;
+            background: #f0fff0;
+            border-color: var(--neon-green);
+        }
+
+        .btn-add {
+            background: var(--dark-black);
+            color: var(--neon-green);
+            border: none;
+            padding: 15px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+            border: 2px solid var(--dark-black);
+        }
+
+        .btn-add:hover {
+            background: var(--neon-green);
+            color: var(--dark-black);
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            min-width: 0;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1rem;
+            border: 3px solid var(--dark-black);
+            box-shadow: 5px 5px 0px var(--dark-black);
+            font-family: 'Rajdhani', sans-serif;
+            box-sizing: border-box;
+        }
+
+        .table-wrap {
+            background: var(--soft-white);
+            border: 3px solid var(--dark-black);
+            overflow-y: auto;
+            flex: 1;
+            position: relative;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--dark-black);
+            color: var(--neon-green);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        th {
+            padding: 15px;
+            text-transform: uppercase;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) { background: #f9f9f9; }
+        tr:hover { background: #eeffee; }
+
+        .btn-del {
+            background: white;
+            color: black;
+            border: 2px solid black;
+            padding: 5px 10px;
+            font-weight: bold;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+        }
+
+        .btn-del:hover {
+            background: #ff0000;
+            color: white;
+            border-color: #ff0000;
+        }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--dark-black); }
+        ::-webkit-scrollbar-thumb { background: var(--neon-green); }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard">
+        <div class="input-section">
+            <h2>SYSTEM_ADD</h2>
+            <form id="studentForm">
+                <input type="text" id="sid" placeholder="STUDENT ID" required>
+                <input type="text" id="fname" placeholder="FIRST NAME" required>
+                <input type="text" id="lname" placeholder="LAST NAME" required>
+                <input type="number" id="lw1" placeholder="LAB WORK 1" required>
+                <input type="number" id="lw2" placeholder="LAB WORK 2" required>
+                <input type="number" id="lw3" placeholder="LAB WORK 3" required>
+                <input type="number" id="prelim" placeholder="PRELIM EXAM" required>
+                <input type="number" id="att" placeholder="ATTENDANCE" required>
+                <button type="submit" class="btn-add">UPLOAD_DATA</button>
+            </form>
+        </div>
+
+        <div class="main-content">
+            <input type="text" id="searchBar" class="search-box" placeholder="SEARCH_DATABASE_QUERY...">
+            
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Lab Work 1</th>
+                            <th>Lab Work 2</th>
+                            <th>Lab Work 3</th>
+                            <th>Prelim Exam</th>
+                            <th>Attendance</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="record.js"></script>
+</body>
+</html>
